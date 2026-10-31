@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>How a forward-looking sonar sees the seabed</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap">
+	<link rel="stylesheet" href="style.css">
+	<script type="importmap">
+	{
+		"imports": {
+			"three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+			"three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+		}
+	}
+	</script>
+	<script type="module" src="js/main.js"></script>
+</head>
+<body>
+	<header class="intro">
+		<h1>How a forward-looking sonar sees the seabed</h1>
+		<p>An imaging sonar sends out a ping that spreads ahead of it in a wide, flat fan. Its receiver array separates the returning sound by direction across the fan, forming many narrow beams side by side. Vertically there is no such separation: each beam hears everything within its tall vertical aperture, and the only thing that sorts those echoes is how long they take to come back. So every pixel in the image is a direction and a distance, and the height the echo came from is lost. Drive the sonar around, change the seabed, and hover over anything to see what that does to the picture.</p>
+	</header>
+
+	<main class="playground">
+		<section class="views">
+			<figure class="panel scene">
+				<div id="scene-view" class="surface">
+					<div class="toolbar" role="group" aria-label="Sonar handle">
+						<button type="button" data-handle="translate">Move <kbd>G</kbd></button>
+						<button type="button" data-handle="rotate">Rotate <kbd>T</kbd></button>
+						<button type="button" data-handle="off">Hide handle <kbd>H</kbd></button>
+					</div>
+				</div>
+				<figcaption>Drag the handle on the sonar to move or rotate it, or drive it from the keyboard: <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> to move, <kbd>R</kbd> <kbd>F</kbd> up and down, <kbd>J</kbd> <kbd>L</kbd> to turn, <kbd>I</kbd> <kbd>K</kbd> to pitch, <kbd>U</kbd> <kbd>O</kbd> to roll, hold <kbd>Shift</kbd> to go faster. Drag elsewhere to orbit, right-drag to pan, scroll to zoom, hover to probe a point.</figcaption>
+			</figure>
+
+			<figure class="panel intensity">
+				<canvas id="intensity-view" class="surface"></canvas>
+				<figcaption>
+					<span>What the sonar shows: echo strength by direction and distance.</span>
+					<span id="intensity-legend" class="legend"></span>
+				</figcaption>
+			</figure>
+
+			<figure class="panel elevation">
+				<canvas id="elevation-view" class="surface"></canvas>
+				<figcaption>
+					<span>Where the echoes came from: colour is their average elevation, brightness is boosted so faint echoes show too. A real sonar can’t measure this.</span>
+					<span id="elevation-legend" class="legend"></span>
+				</figcaption>
+			</figure>
+
+			<figure class="panel side">
+				<canvas id="side-view" class="surface"></canvas>
+				<figcaption>Side view: a vertical slice through the sonar along its heading.</figcaption>
+			</figure>
+
+			<p id="readout" class="readout"></p>
+		</section>
+
+		<aside id="controls" class="controls"></aside>
+	</main>
+
+	<article class="notes">
+		<h2>Reading the views</h2>
+		<p>In the 3D view, the orange outline marks the region the sonar fills with sound. The coloured speckles show where that sound lands, coloured by elevation: the angle above or below the sonar’s axis it travelled at. Pink is the bottom of the vertical aperture and blue is the top.</p>
+		<p>The left image is what the sonar actually produces. The right image is the same picture, coloured by the average elevation of everything that landed in each pixel, so you can see which parts of the aperture each part of the picture came from. The side view shows the same colours along a vertical slice, with the lit surface drawn as a bright line and the shaded wedge showing where the sound travels before it hits something.</p>
+		<p>When you hover over a pixel, a thin arc appears in the 3D and side views. It joins every place at that exact direction and distance, from the bottom of the aperture to the top. Anything on that arc that reflects sound ends up in the same pixel, and the white dots mark where that happens.</p>
+	</article>
+</body>
+</html>
